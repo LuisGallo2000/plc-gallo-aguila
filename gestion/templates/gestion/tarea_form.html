@@ -1,0 +1,45 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}
+  {% if form.instance.pk %}
+    Editar Tarea
+  {% else %}
+    Nueva Tarea
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <h1 class="mb-4">
+    {% if form.instance.pk %}
+      Editar Tarea: {{ form.instance.titulo }}
+    {% else %}
+      Crear Nueva Tarea
+    {% endif %}
+  </h1>
+
+  <form method="post">
+    {% csrf_token %}
+    
+    <div class="mb-3">
+        <label for="id_titulo" class="form-label">Título</label>
+        {{ form.titulo }}
+    </div>
+    <div class="mb-3">
+        <label for="id_descripcion" class="form-label">Descripción</label>
+        {{ form.descripcion }}
+    </div>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="id_estado" class="form-label">Estado</label>
+            {{ form.estado }}
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="id_prioridad" class="form-label">Prioridad</label>
+            {{ form.prioridad }}
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    <a href="{% if form.instance.pk %}{% url 'detalle_tarea' form.instance.pk %}{% else %}{% url 'lista_tareas' %}{% endif %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+{% endblock %}
